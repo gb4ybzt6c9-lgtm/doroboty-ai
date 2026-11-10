@@ -15,6 +15,7 @@ import {
 import { currentPerson, jobSchema } from "./model";
 import { usePrototype } from "./store";
 import { Field } from "./workspace";
+import { PRACTITIONER_ADDON } from "./practitioner";
 import { Empty, NotFound, PageTitle } from "./shell";
 
 export function EmployerJobs() {
@@ -47,6 +48,7 @@ export function EmployerJobs() {
                   <p className="mt-3 text-muted-foreground">
                     {state.applications.filter((x) => x.jobId === job.id).length} aplikacji ·{" "}
                     {job.publicationStatus === "published" ? "Opublikowana" : "Szkic"}
+                    {job.practitionerAddon ? " · Z dodatkiem: rozmowy z praktykiem AI" : ""}
                   </p>
                 </div>
                 <Link
@@ -77,6 +79,7 @@ export function EmployerJobEditor() {
   const [source, setSource] = useState(existing?.sourceBrief ?? "");
   const [generated, setGenerated] = useState(existing?.generatedDescription ?? "");
   const [approved, setApproved] = useState(false);
+  const [addon, setAddon] = useState(existing?.practitionerAddon ?? false);
   const [error, setError] = useState("");
   if (id !== "nowa" && !existing) return <NotFound />;
   function publish(e: FormEvent<HTMLFormElement>) {
@@ -97,6 +100,7 @@ export function EmployerJobEditor() {
       description,
       sourceBrief: source,
       generatedDescription: generated,
+      practitionerAddon: addon || undefined,
       category: data.get("category"),
       function: data.get("function"),
       remoteStatus: data.get("remoteStatus"),
@@ -252,6 +256,40 @@ export function EmployerJobEditor() {
             <Input name="salaryMax" type="number" min="0" defaultValue={existing?.salaryMax} />
           </Field>
         </div>
+        <section className="practitioner-offer" aria-labelledby="practitioner-offer-title">
+          <div className="practitioner-offer-head">
+            <h2 id="practitioner-offer-title">{PRACTITIONER_ADDON.name}</h2>
+            <span className="practitioner-pill">Beta</span>
+          </div>
+          <p>
+            Praktyk AI rozmawia {PRACTITIONER_ADDON.minutes} minut z{" "}
+            {PRACTITIONER_ADDON.candidatesPerJob} najlepiej dopasowanymi kandydatami. W ciągu{" "}
+            {PRACTITIONER_ADDON.deliveryHours} godzin dostajesz kartę każdej osoby: co zrobiła sama
+            i potwierdziła w rozmowie, czego nie robiła, czego nie wiemy i o co dopytać.
+            Rekomendacja należy do praktyka, decyzja o zaproszeniu do Ciebie.
+          </p>
+          <p className="practitioner-price">
+            <strong>{PRACTITIONER_ADDON.betaPricePln} zł netto</strong>{" "}
+            <s>{PRACTITIONER_ADDON.targetPricePln} zł</s> · cena w becie
+          </p>
+          <p className="record-caption">
+            Gwarancja: jeśli karty nie wskażą ani jednej osoby wartej rozmowy, zwracamy koszt
+            dodatku. Kandydaci wiedzą, że rozmawiają z człowiekiem z DoRoboty.
+          </p>
+          <label className="flex items-start gap-3">
+            <Checkbox
+              checked={addon}
+              onCheckedChange={setAddon}
+              aria-label={`Dodaj do oferty: ${PRACTITIONER_ADDON.name}`}
+            />
+            <span>
+              Dodaj do oferty za {PRACTITIONER_ADDON.betaPricePln} zł netto.
+              <span className="record-caption block">
+                Prototyp: płatność jest symulowana i nic nie zostanie pobrane.
+              </span>
+            </span>
+          </label>
+        </section>
         <label className="flex items-start gap-3">
           <Checkbox
             checked={approved}
@@ -266,7 +304,7 @@ export function EmployerJobEditor() {
           </p>
         )}
         <Button type="submit" disabled={!approved}>
-          Opublikuj ofertę
+          {addon ? "Opublikuj ofertę z dodatkiem" : "Opublikuj ofertę"}
         </Button>
       </form>
     </>

@@ -104,7 +104,7 @@ test("published job → saved offer/draft → submitted application → employer
     .fill("Szukamy osoby do badań z klientami, prototypowania i wdrażania automatyzacji obsługi.");
   await page.getByRole("button", { name: "Przygotuj opis z AI" }).click();
   await page.getByRole("button", { name: "Użyj propozycji" }).click();
-  await page.getByRole("checkbox").check();
+  await page.getByRole("checkbox", { name: "Zatwierdzam treść oferty" }).check();
   await page.getByRole("button", { name: "Opublikuj ofertę" }).click();
   await expect(
     page.getByRole("link", { name: "Product Designer do automatyzacji", exact: true }),
@@ -994,4 +994,54 @@ test("candidate snapshot supports custom CV and long content at desktop and mobi
   await expect(page.getByRole("tabpanel", { name: "Odpowiedź", exact: true })).toContainText(
     record.answer,
   );
+});
+
+test("employer buys the practitioner add-on and decides with the prepared cards", async ({
+  page,
+}) => {
+  await choose(page, "Karolina Wiśniewska");
+  await page.goto("/#/app/oferty");
+  await page.getByRole("link", { name: "AI Product Manager", exact: true }).click();
+  await page.getByRole("checkbox", { name: /Dodaj do oferty: Pierwsze rozmowy/ }).check();
+  await page.getByRole("checkbox", { name: "Zatwierdzam treść oferty" }).check();
+  await page.getByRole("button", { name: "Opublikuj ofertę z dodatkiem", exact: true }).click();
+  await expect(
+    page.getByText("Z dodatkiem: rozmowy z praktykiem AI", { exact: false }),
+  ).toBeVisible();
+
+  await choose(page, "Anna Kowalska");
+  await page.goto("/#/aplikuj/ai-product-manager");
+  await expect(page.getByText("To człowiek, nie bot.", { exact: false })).toBeVisible();
+  await page
+    .getByLabel("Dlaczego pasujesz do tej roli?")
+    .fill("Przeprowadziłam 18 wywiadów i wdrożyłam asystenta zgłoszeń. Czas obsługi spadł o 30%.");
+  await page.getByRole("checkbox").check();
+  await page.getByRole("button", { name: "Wyślij aplikację", exact: true }).click();
+  await expect(page.getByText("Aplikacja została wysłana.", { exact: false })).toBeVisible();
+  await expect(page.getByText("Rekomendacja praktyka", { exact: false })).toHaveCount(0);
+
+  await choose(page, "Karolina Wiśniewska");
+  await page.getByRole("link", { name: "Kandydaci", exact: true }).click();
+  await expect(
+    page.getByText("Rekomendacja praktyka: Dopytać przed zaproszeniem", { exact: true }),
+  ).toBeVisible();
+  await page.getByRole("link", { name: "Marek Nowak", exact: true }).click();
+  await expect(page.getByRole("tab", { name: "Karta praktyka", exact: true })).toHaveAttribute(
+    "aria-selected",
+    "true",
+  );
+  await expect(
+    page.getByText("Rekomendacja praktyka: Zaprosić na rozmowę", { exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Wstaw pytania do notatki rekrutacyjnej" }).click();
+  const note = page.getByLabel("Notatka rekrutacyjna (widoczna pracodawcy)");
+  await expect(note).toBeFocused();
+  await expect(note).toHaveValue(/Do dopytania \(karta praktyka\)/);
+  await page.getByRole("button", { name: "W przeglądzie", exact: true }).click();
+  await page.getByRole("button", { name: "Zaproszenie na rozmowę", exact: true }).click();
+  await page.reload();
+  await expect(page.locator(".record-stage")).toHaveText("Zaproszenie na rozmowę");
+  await expect(page.getByText("Do dopytania (karta praktyka)", { exact: false })).toBeVisible();
+  const accessibility = await new AxeBuilder({ page }).include(".recruiting-record").analyze();
+  expect(accessibility.violations).toEqual([]);
 });

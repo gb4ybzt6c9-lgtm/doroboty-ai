@@ -4,6 +4,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { ApplicationRecord } from "./application-record";
 import { nextStages, stageLabels, type Application } from "./model";
 import { usePrototype } from "./store";
+import { practitionerCard } from "./practitioner";
+import { PractitionerCardView } from "./practitioner-card";
 
 export function RecruitingApplication({ application }: { application: Application }) {
   const { state, run } = usePrototype();
@@ -13,6 +15,9 @@ export function RecruitingApplication({ application }: { application: Applicatio
   const pendingFocus = useRef(false);
   const company = state.companies.find((item) => item.id === application.companyId);
   const availableStages = nextStages[application.stage];
+  const job = state.jobs.find((item) => item.id === application.jobId);
+  const card = job?.practitionerAddon ? practitionerCard(application.candidateId) : undefined;
+  const canTakeNotes = availableStages.length > 0;
 
   useLayoutEffect(() => {
     if (pendingFocus.current) {
@@ -29,6 +34,43 @@ export function RecruitingApplication({ application }: { application: Applicatio
         audience="employer"
         history={application.events}
         statusRef={statusRef}
+        leadSection={
+          job?.practitionerAddon
+            ? {
+                value: "practitioner",
+                label: "Karta praktyka",
+                content: card ? (
+                  <PractitionerCardView
+                    card={card}
+                    onUseQuestions={
+                      canTakeNotes
+                        ? () => {
+                            const questions = card.questions.map((q) => `• ${q}`).join("\n");
+                            setNote((current) =>
+                              current.includes(questions)
+                                ? current
+                                : [current.trim(), `Do dopytania (karta praktyka):\n${questions}`]
+                                    .filter(Boolean)
+                                    .join("\n\n"),
+                            );
+                            setAnnouncement("Pytania z karty praktyka wstawiono do notatki.");
+                            document.getElementById("recruiting-note")?.focus();
+                          }
+                        : undefined
+                    }
+                  />
+                ) : (
+                  <>
+                    <h3>Karta po rozmowie z praktykiem</h3>
+                    <p>
+                      Praktyk przygotowuje kartę w ciągu 48 godzin od rozmowy. W tym scenariuszu nie
+                      ma przygotowanej karty dla tej osoby.
+                    </p>
+                  </>
+                ),
+              }
+            : undefined
+        }
         footer={
           availableStages.length > 0 ? (
             <>

@@ -61,6 +61,8 @@ export type Job = {
   publishedAt: string;
   expiryAt: string;
   verificationStatus: "unverified" | "editorial" | "employer_verified";
+  /** Simulated paid add-on: practitioner first interviews (see prototype/practitioner.ts). */
+  practitionerAddon?: boolean;
 };
 
 export type JobWithCompany = Job & { company: Company };

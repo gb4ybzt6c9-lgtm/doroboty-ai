@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { initialState, transition, stateSchema, type State } from "./model";
+import { practitionerCard } from "./practitioner";
 const time = "2026-11-03T10:00:00.000Z";
 function as(state: State, id: string) {
   return transition(state, { type: "select_person", id });
@@ -137,5 +138,19 @@ describe("coherent browser scenario", () => {
     expect(() =>
       transition(state, { type: "publish", job: { ...updated, salaryMin: 500, salaryMax: 1 } }),
     ).toThrow();
+  });
+  it("stores the simulated practitioner add-on and keeps saves without it valid", () => {
+    const state = as(initialState(), "employer-brightlabs");
+    expect(state.jobs[0].practitionerAddon).toBeUndefined();
+    const result = transition(state, {
+      type: "publish",
+      job: { ...state.jobs[0], practitionerAddon: true },
+    });
+    expect(result.jobs[0].practitionerAddon).toBe(true);
+    expect(stateSchema.parse(JSON.parse(JSON.stringify(result))).jobs[0].practitionerAddon).toBe(
+      true,
+    );
+    expect(practitionerCard("candidate-anna")?.recommendation).toBe("ask_first");
+    expect(practitionerCard("candidate-marek")?.recommendation).toBe("invite");
   });
 });

@@ -21,6 +21,7 @@ export function ApplicationRecord({
   statusRef,
   children,
   footer,
+  leadSection,
 }: {
   application: Pick<
     Application,
@@ -32,6 +33,8 @@ export function ApplicationRecord({
   statusRef?: Ref<HTMLSpanElement>;
   children?: ReactNode;
   footer?: ReactNode;
+  /** Optional first reading tab, e.g. the practitioner card for employers. */
+  leadSection?: { value: string; label: string; content: ReactNode };
 }) {
   const candidate = audience === "candidate";
   const title = candidate ? application.jobTitle : application.candidateName;
@@ -68,6 +71,7 @@ export function ApplicationRecord({
         <RecordSheet
           label={candidate ? "Twoja wysłana aplikacja" : "Materiały kandydata"}
           sections={[
+            ...(leadSection ? [leadSection] : []),
             {
               value: "answer",
               label: "Odpowiedź",

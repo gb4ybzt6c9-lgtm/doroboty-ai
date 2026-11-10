@@ -337,3 +337,112 @@
   border-radius: 10px;
   background: var(--gui-canvas);
 }
+
+/* Practitioner add-on (host extension): composed from existing contour, pill and caption roles. */
+.practitioner-offer {
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+  border: 1px solid var(--gui-text);
+  border-radius: 24px;
+  background: #fff;
+}
+.practitioner-offer-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.practitioner-offer h2 {
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: -0.6px;
+}
+.practitioner-offer p {
+  line-height: 1.65;
+}
+.practitioner-price strong {
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: #ffe0f7;
+  font-weight: 600;
+}
+.practitioner-price s {
+  color: var(--gui-text-muted);
+}
+.practitioner-pill {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 3px 12px;
+  border: 1px solid var(--gui-text);
+  border-radius: 18px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.practitioner-pill[data-recommendation="invite"] {
+  background: #ffe0f7;
+}
+.practitioner-card {
+  display: grid;
+  gap: 18px;
+}
+.practitioner-card h3 {
+  margin-bottom: 0;
+}
+.practitioner-recommendation {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid var(--gui-text);
+  border-radius: 18px;
+}
+.record-reading .practitioner-recommendation p {
+  line-height: 1.6;
+}
+.practitioner-list h4 {
+  margin-bottom: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+.practitioner-list ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 20px;
+  list-style: disc;
+  font-size: 15px;
+  line-height: 1.65;
+}
+.practitioner-card > [data-slot="button"] {
+  justify-self: start;
+  max-width: 100%;
+  white-space: normal;
+}
+.practitioner-disclaimer {
+  padding-top: 14px;
+  border-top: 1px solid #d8d5d1;
+}
+.practitioner-list-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.practitioner-candidate-note {
+  padding: 12px 16px;
+  border: 1px solid var(--gui-text);
+  border-radius: 18px;
+  background: #ffe0f7;
+  font-size: 14px;
+  line-height: 1.6;
+}

@@ -16,6 +16,8 @@ import { CvAttachment } from "./cv-attachment";
 import { MatchScore } from "./match-score";
 import { RecruitingApplication } from "./recruiting-application";
 import { CandidateApplication } from "./candidate-application";
+import { practitionerCard } from "./practitioner";
+import { RecommendationPill } from "./practitioner-card";
 
 export function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
@@ -312,6 +314,12 @@ export function ApplyPage() {
               Aplikujesz jako <strong>{person.name}</strong>.
             </p>
           </header>
+          {job.practitionerAddon && (
+            <p className="practitioner-candidate-note">
+              W tej rekrutacji pierwszą, 20-minutową rozmowę może z Tobą przeprowadzić praktyk AI z
+              DoRoboty. To człowiek, nie bot. Firma dostanie od niego krótkie podsumowanie rozmowy.
+            </p>
+          )}
           <section className="application-form-section" aria-labelledby="application-cv-title">
             <h3 id="application-cv-title">Twoje CV</h3>
             <p className="application-help">Do aplikacji dołączymy CV z Twojego profilu.</p>
@@ -455,6 +463,7 @@ export function ApplicationsPage({ employer = false }: { employer?: boolean }) {
                 <MatchScore score={a.score} />
               </div>
               {employer && <p className="mt-4 text-muted-foreground">{a.summary}</p>}
+              {employer && <ListPractitionerNote application={a} />}
             </article>
           ))
         ) : (
@@ -462,6 +471,28 @@ export function ApplicationsPage({ employer = false }: { employer?: boolean }) {
         )}
       </div>
     </>
+  );
+}
+function ListPractitionerNote({
+  application,
+}: {
+  application: { jobId: string; candidateId: string };
+}) {
+  const { state } = usePrototype();
+  const job = state.jobs.find((x) => x.id === application.jobId);
+  if (!job?.practitionerAddon) return null;
+  const card = practitionerCard(application.candidateId);
+  return (
+    <div className="practitioner-list-note">
+      {card ? (
+        <>
+          <RecommendationPill recommendation={card.recommendation} />
+          <span>{card.reason}</span>
+        </>
+      ) : (
+        <span>Karta praktyka w przygotowaniu (do 48 godzin).</span>
+      )}
+    </div>
   );
 }
 export function ApplicationDetail({ employer = false }: { employer?: boolean }) {

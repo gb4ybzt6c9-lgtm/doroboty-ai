@@ -53,6 +53,7 @@ export const jobSchema = z
     verificationStatus: z.enum(["unverified", "editorial", "employer_verified"]),
     sourceBrief: text.optional(),
     generatedDescription: text.optional(),
+    practitionerAddon: z.boolean().optional(),
   })
   .refine(
     (job) =>
