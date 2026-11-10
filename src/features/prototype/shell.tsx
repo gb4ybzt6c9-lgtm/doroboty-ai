@@ -18,6 +18,7 @@ import { BrandMark } from "@/features/public/brand-mark";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { currentPerson } from "./model";
 import { usePrototype } from "./store";
+import { ScreenErrorBoundary } from "./error-boundary";
 import { cn } from "@/lib/utils";
 const navigation = [
   { to: "/oferty", label: "Oferty" },
@@ -106,7 +107,9 @@ export function Shell() {
         </p>
       )}
       <div key={`${state.activePersonId}:${pathname}`}>
-        <Outlet />
+        <ScreenErrorBoundary>
+          <Outlet />
+        </ScreenErrorBoundary>
       </div>
     </>
   );
@@ -289,6 +292,9 @@ export function Shell() {
                 <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
                   Praca dla ludzi, którzy potrafią z AI zbudować coś wartościowego — nie tylko
                   wpisać je do CV.
+                </p>
+                <p className="mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
+                  Wersja demonstracyjna. Wszystkie oferty i firmy są przykładowe.
                 </p>
               </div>
               <nav
