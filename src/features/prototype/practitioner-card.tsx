@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { PractitionerTalkIllustration } from "./illustrations";
 import { recommendationLabels, type PractitionerCard, type Recommendation } from "./practitioner";
 
 const dateFormat = new Intl.DateTimeFormat("pl-PL", { dateStyle: "medium", timeStyle: "short" });
@@ -35,6 +36,7 @@ export function PractitionerCardView({
   return (
     <div className="practitioner-card">
       <h3>Karta po rozmowie z praktykiem</h3>
+      <PractitionerTalkIllustration />
       <p className="record-caption">
         Rozmowa z praktykiem: 20 minut ·{" "}
         <time dateTime={card.heldAt}>{dateFormat.format(new Date(card.heldAt))}</time> ·{" "}

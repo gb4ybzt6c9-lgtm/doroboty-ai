@@ -140,16 +140,16 @@
 
   --gui-shadow-none: none;
   --gui-shadow-s: 0 2px 4px 0 #00000000;
-  --gui-shadow-m: inset 0 0 0 1px #181818;
+  --gui-shadow-m: inset 0 0 0 1px var(--host-contour, #181818);
   --gui-shadow-l: 0 16px 48px 0 #00000000;
   /* Visible ink contours; no offset shadows. */
-  --gui-edge-shadow: inset 0 0 0 1px #181818;
-  --gui-divider-top-shadow: inset 0 1px var(--gui-edge);
-  --gui-divider-bottom-shadow: inset 0 -1px var(--gui-edge);
-  --gui-divider-inline-end-shadow: inset -1px 0 var(--gui-edge);
+  --gui-edge-shadow: inset 0 0 0 1px var(--host-contour, #181818);
+  --gui-divider-top-shadow: inset 0 1px var(--host-contour, var(--gui-edge));
+  --gui-divider-bottom-shadow: inset 0 -1px var(--host-contour, var(--gui-edge));
+  --gui-divider-inline-end-shadow: inset -1px 0 var(--host-contour, var(--gui-edge));
   --gui-accent-edge-shadow: none;
   --gui-accent-bar-shadow: inset 4px 0 var(--gui-color-1);
-  --gui-control-shadow: inset 0 0 0 1px #181818;
+  --gui-control-shadow: inset 0 0 0 1px var(--host-contour, #181818);
   --gui-control-hover-shadow: none;
   --gui-control-focus-shadow: none;
   --gui-control-invalid-shadow: none;
