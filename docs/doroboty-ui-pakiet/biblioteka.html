@@ -1,0 +1,438 @@
+<!doctype html>
+<html lang="pl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Biblioteka DoRoboty</title>
+<link rel="stylesheet" href="doroboty.css">
+<style>
+/* Strona biblioteki: tylko układ dokumentacji. Wszystko, co jest przykładem, pochodzi z doroboty.css. Celowo jeden, jasny motyw: produkt nie ma trybu ciemnego. */
+:root{color-scheme:light}
+body{margin:0;background:var(--dr-bg)}
+.lib{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1320px;margin:0 auto}
+.lib-toc{position:sticky;top:0;height:100vh;overflow:auto;padding:28px 12px 28px 20px;border-right:1px solid var(--dr-line);font-size:13.5px}
+.lib-toc b{display:block;font:700 16px var(--dr-font-head);margin:0 0 12px 8px}
+.lib-toc a{display:block;padding:4px 8px;border-radius:8px;color:var(--dr-muted);text-decoration:none}
+.lib-toc a:hover{background:var(--dr-surface-2);color:var(--dr-ink)}
+.lib-main{padding:32px 40px 80px;min-width:0}
+.lib-main > h1{font:700 32px/1.15 var(--dr-font-head);letter-spacing:-.015em;margin:0 0 6px}
+.lib-lead{color:var(--dr-muted);max-width:72ch;margin:0 0 8px}
+.lib-sec{margin-top:40px;scroll-margin-top:16px}
+.lib-sec > h2{font:600 24px var(--dr-font-head);margin:0 0 4px;letter-spacing:-.01em}
+.lib-sec > p{max-width:76ch;margin:0 0 10px;color:var(--dr-muted)}
+.ex{background:var(--dr-surface);border:1px solid var(--dr-line);border-radius:var(--dr-r-card);margin:14px 0;overflow:hidden}
+.ex-h{display:flex;gap:10px;justify-content:space-between;align-items:baseline;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--dr-line)}
+.ex-h b{font-size:14px}.ex-h span{font-size:13px;color:var(--dr-muted)}
+.ex-stage{padding:20px;background:var(--dr-bg)}
+.ex details{border-top:1px solid var(--dr-line)}
+.ex summary{cursor:pointer;padding:10px 16px;font-size:13px;font-weight:500;color:var(--dr-action)}
+.ex pre{margin:0;padding:14px 16px;background:#1C1D27;color:#F2EEEA;font:12.5px/1.55 ui-monospace,Menlo,monospace;overflow-x:auto;white-space:pre}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+.rules div{border-radius:10px;padding:10px 14px;font-size:14px}
+.rules .y{background:var(--dr-yes-bg);color:var(--dr-yes-ink)}.rules .n{background:var(--dr-no-bg);color:var(--dr-no)}
+.rules b{display:block;font-size:12px;margin-bottom:2px}
+.tok{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.tok div{background:var(--dr-surface);border:1px solid var(--dr-line);border-radius:10px;overflow:hidden;font-size:12px}
+.tok i{display:block;height:40px}.tok span{display:block;padding:6px 8px;line-height:1.35}
+.tok code{font-size:11.5px}
+@media (max-width:900px){.lib{grid-template-columns:1fr}.lib-toc{position:static;height:auto;border-right:0;border-bottom:1px solid var(--dr-line);display:flex;flex-wrap:wrap;gap:2px;padding:12px 16px}.lib-toc b{width:100%}.lib-main{padding:24px 16px 60px}.rules{grid-template-columns:1fr}.ex-stage{padding:14px}}
+</style></head>
+<body>
+<div class="dr">
+<div class="lib">
+<nav class="lib-toc" aria-label="Spis komponentów"><b>Biblioteka DoRoboty</b>
+<a href="#start">Jak używać</a><a href="#tokeny">Tokeny</a><a href="#przyciski">Przyciski</a><a href="#rekomendacja">Rekomendacja</a><a href="#naglowek">Nagłówek ekranu</a><a href="#statystyki">Statystyki</a><a href="#wskazowka">Wskazówka</a><a href="#filtry">Filtry</a><a href="#tabela">Tabela</a><a href="#podglad">Podgląd szczegółów</a><a href="#match">Match Score</a><a href="#karta">Karta i fakty</a><a href="#porownanie">Porównanie</a><a href="#zakup">Zakup</a><a href="#formularz">Formularz</a><a href="#stany">Stany</a><a href="#ilustracje">Ilustracje</a><a href="#strona">Cała strona</a>
+</nav>
+<main class="lib-main">
+<p class="dr-note" style="margin:0 0 4px">DoRoboty.ai · pakiet dla agenta · v1.18 · 10.11.2026</p>
+<h1>Biblioteka komponentów</h1>
+<p class="lib-lead">Działające przykłady wszystkich komponentów z <code>doroboty.css</code>. Pod każdym przykładem jest gotowy kod HTML do skopiowania. Ta strona nie dodaje własnych stylów do komponentów, więc wygląda tak, jak wyglądać będzie produkt.</p>
+
+<section class="lib-sec" id="start"><h2>Jak używać</h2>
+<p>1) Skopiuj cały folder pakietu do projektu. 2) W <code>&lt;head&gt;</code> dodaj <code>&lt;link rel="stylesheet" href="doroboty.css"&gt;</code>, a na końcu <code>&lt;body&gt;</code> <code>&lt;script src="doroboty.js"&gt;&lt;/script&gt;</code>. 3) Całą aplikację owiń w <code>&lt;div class="dr"&gt;</code>. Czcionki ładują się z folderu <code>fonts/</code>, bez Google.</p>
+<div class="ex" data-title="Szkielet strony" data-note="menu 232 px + treść; poniżej 1100 px menu u góry"><div class="ex-stage" data-nolive>
+<div class="dr">
+  <div class="dr-app">
+    <nav class="dr-side" aria-label="Menu panelu">
+      <div class="dr-logo"><i>dR</i>DoRoboty.ai</div>
+      <a class="dr-nav" href="#" aria-current="page">Kandydaci <span class="cnt num">24</span></a>
+      <a class="dr-nav" href="#">Kup ogłoszenie</a>
+      <div class="sep"></div>
+      <div class="who"><b>Anna, rekruterka</b>Splot Operacje</div>
+    </nav>
+    <main class="dr-main">…</main>
+  </div>
+</div>
+</div></div>
+</section>
+
+<section class="lib-sec" id="tokeny"><h2>Tokeny</h2>
+<p>Używaj tylko zmiennych <code>--dr-*</code>. Nowy kolor lub rozmiar to decyzja dla właściciela systemu, nie dla pojedynczego ekranu.</p>
+<div class="tok">
+<div><i style="background:var(--dr-action)"></i><span><code>--dr-action</code><br>tylko rzeczy klikalne</span></div>
+<div><i style="background:var(--dr-action-soft)"></i><span><code>--dr-action-soft</code><br>aktywne tła</span></div>
+<div><i style="background:var(--dr-ink)"></i><span><code>--dr-ink</code><br>tekst</span></div>
+<div><i style="background:var(--dr-muted)"></i><span><code>--dr-muted</code><br>tekst pomocniczy</span></div>
+<div><i style="background:var(--dr-faint)"></i><span><code>--dr-faint</code><br>tylko grafika</span></div>
+<div><i style="background:var(--dr-bg)"></i><span><code>--dr-bg</code><br>tło aplikacji</span></div>
+<div><i style="background:var(--dr-surface-2)"></i><span><code>--dr-surface-2</code><br>pola faktów</span></div>
+<div><i style="background:var(--dr-line-field)"></i><span><code>--dr-line-field</code><br>ramka pól</span></div>
+<div><i style="background:var(--dr-yes)"></i><span><code>--dr-yes</code><br>Zaprosić</span></div>
+<div><i style="background:var(--dr-ask)"></i><span><code>--dr-ask</code><br>Dopytać</span></div>
+<div><i style="background:var(--dr-no)"></i><span><code>--dr-no</code><br>Nie zapraszać</span></div>
+<div><i style="background:var(--dr-danger)"></i><span><code>--dr-danger</code><br>błąd systemu</span></div>
+</div>
+</section>
+
+<section class="lib-sec" id="przyciski"><h2>Przyciski</h2>
+<p>Pigułka. Primary: jedna główna decyzja w obszarze. Secondary: alternatywa. Ghost: przejście i akcja w wierszu tabeli. Etykieta: czasownik + obiekt.</p>
+<div class="ex" data-title="Warianty i rozmiary"><div class="ex-stage">
+<div class="dr-row">
+  <a class="dr-btn dr-btn-primary" href="#">Zaproś na rozmowę</a>
+  <a class="dr-btn dr-btn-secondary" href="#">Odrzuć</a>
+  <a class="dr-btn dr-btn-ghost" href="#">Następna osoba: Bartosz M. →</a>
+</div>
+<div class="dr-row" style="margin-top:12px">
+  <button type="button" class="dr-btn dr-btn-primary dr-btn-lg">Kup ogłoszenie</button>
+  <a class="dr-btn dr-btn-ghost dr-btn-sm" href="#" aria-label="Zobacz kartę: Kuba W.">Zobacz kartę</a>
+  <button type="button" class="dr-btn dr-btn-primary" aria-busy="true">Przetwarzamy płatność</button>
+  <button type="button" class="dr-btn dr-btn-secondary" disabled>Niedostępne</button>
+</div>
+</div></div>
+<div class="rules"><div class="y"><b>Tak</b>„Odrzuć z informacją zwrotną” jako primary, gdy rekomendacja to „Nie zapraszać”.</div><div class="n"><b>Nie</b>Zielony przycisk „Zaproś” albo dwa primary obok siebie.</div></div>
+</section>
+
+<section class="lib-sec" id="rekomendacja"><h2>Rekomendacja praktyka</h2>
+<p>Klasa techniczna <code>dr-verdict</code>; w treści zawsze „rekomendacja”. Słowo + kropka + ramka, nigdy sam kolor. Pod chipem w tabeli <code>dr-wait</code> (dostępność kandydata).</p>
+<div class="ex" data-title="Cztery wartości, dwa rozmiary"><div class="ex-stage">
+<div class="dr-row">
+  <span class="dr-verdict yes">Zaprosić</span>
+  <span class="dr-verdict ask">Dopytać</span>
+  <span class="dr-verdict no">Nie zapraszać</span>
+  <span class="dr-verdict none">Brak rozmowy</span>
+  <span class="dr-verdict yes dr-verdict-lg">Zaprosić</span>
+</div>
+</div></div>
+<div class="ex" data-title="Z dostępnością kandydata" data-note="dr-wait.late, gdy czeka ponad 7 dni"><div class="ex-stage">
+<div class="dr-row" style="align-items:flex-start;gap:32px">
+  <div><span class="dr-verdict yes">Zaprosić</span><span class="dr-wait">Zainteresowana rozmową<br>Karta od 2 dni</span></div>
+  <div><span class="dr-verdict none">Brak rozmowy</span><span class="dr-wait late">Czeka 9 dni na odpowiedź</span></div>
+</div>
+</div></div>
+<div class="ex" data-title="Chip informacyjny (nie rekomendacja)"><div class="ex-stage">
+<div class="dr-row"><span class="dr-chip">Szkic</span><span class="dr-chip dr-chip-info">Beta · cena testowa</span></div>
+</div></div>
+</section>
+
+<section class="lib-sec" id="naglowek"><h2>Nagłówek ekranu</h2>
+<p>Okruszki → tytuł → linia meta → maks. dwa przyciski. Na karcie kandydata awatar z inicjałami.</p>
+<div class="ex" data-title="Karta kandydata"><div class="ex-stage">
+<nav class="dr-crumbs" aria-label="Okruszki"><a href="#">Kandydaci</a> / <span aria-current="page">Kuba W.</span></nav>
+<div class="dr-head">
+  <div class="dr-cand-head">
+    <div class="dr-avatar" aria-hidden="true">KW</div>
+    <div><h1>Kuba W.</h1><div class="sub">Specjalizacja: Indeksowanie i ewaluacja · Aplikacja 6 czerwca 2026</div></div>
+  </div>
+  <div class="actions"><a class="dr-btn dr-btn-secondary" href="#">Odrzuć</a><a class="dr-btn dr-btn-primary" href="#">Zaproś na rozmowę</a></div>
+</div>
+<h2 class="dr-h2">Nagłówek sekcji</h2>
+</div></div>
+</section>
+
+<section class="lib-sec" id="statystyki"><h2>Kafle statystyk</h2>
+<p>Maks. 4, nieklikalne, tylko gdy liczby są sednem ekranu. Poniżej 900 px 2×2.</p>
+<div class="ex" data-title="Kafle nad listą"><div class="ex-stage">
+<div class="dr-stats" style="margin:0">
+  <div class="dr-stat"><b>24</b><span>aplikacje</span></div>
+  <div class="dr-stat"><b>5</b><span>po rozmowie z praktykiem</span></div>
+  <div class="dr-stat"><b>2</b><span>warte zaproszenia</span></div>
+  <div class="dr-stat"><b>3</b><span>czekają ponad 7 dni</span></div>
+</div>
+</div></div>
+</section>
+
+<section class="lib-sec" id="wskazowka"><h2>Wskazówka „Od kogo zacząć”</h2>
+<p>Najwyżej jedna na ekranie. Tytuł, 1–2 zdania z konkretem, opcjonalne ostrzeżenie <code>dr-warn</code>, przycisk primary, opcjonalna ilustracja <code>dr-illo-hero</code>.</p>
+<div class="ex" data-title="Wariant wyróżniony"><div class="ex-stage">
+<div class="dr-callout dr-callout-strong" role="region" aria-label="Od kogo zacząć" style="margin:0">
+  <div class="body">
+    <span class="title">Od kogo zacząć</span>
+    <p>Praktyk rekomenduje zaprosić <b>2 osoby</b>: Kubę W. i Bartosza M.</p>
+    <p class="dr-warn"><i aria-hidden="true">!</i><span><b>Ważne:</b> odezwij się w ciągu 3 dni.</span></p>
+  </div>
+  <a class="dr-btn dr-btn-primary" href="#">Zacznij od rekomendacji →</a>
+  <svg class="dr-illo dr-illo-hero" viewBox="0 0 300 220" role="img" aria-label="Ilustracja: rekruterka i praktyk przy dużej karcie kandydata z zielonym znacznikiem">
+        <ellipse cx="150" cy="206" rx="130" ry="8" fill="var(--dr-illo-floor)"/>
+        <rect x="60" y="22" width="180" height="128" rx="14" fill="#fff" stroke="var(--dr-illo-lav)" stroke-width="2"/>
+        <rect x="74" y="36" width="70" height="8" rx="4" fill="var(--dr-illo-lav)"/>
+        <rect x="74" y="54" width="152" height="6" rx="3" fill="var(--dr-action-soft)"/><rect x="74" y="66" width="120" height="6" rx="3" fill="var(--dr-action-soft)"/>
+        <g class="float"><rect x="140" y="80" width="92" height="56" rx="10" fill="var(--dr-action)"/><circle cx="158" cy="98" r="9" fill="#fff" opacity=".9"/><rect x="172" y="92" width="48" height="5" rx="2.5" fill="#fff" opacity=".9"/><rect x="172" y="102" width="34" height="5" rx="2.5" fill="#fff" opacity=".6"/><rect x="150" y="116" width="44" height="12" rx="6" fill="var(--dr-yes-bg)"/><circle cx="157" cy="122" r="3" fill="var(--dr-yes)"/></g>
+        <g class="pop"><circle cx="232" cy="80" r="13" fill="var(--dr-yes)"/><path d="M226 80l4 4 8-8" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+        <g class="float2"><rect x="66" y="96" width="62" height="38" rx="8" fill="var(--dr-action-soft)" stroke="var(--dr-illo-lav)"/><rect x="74" y="106" width="38" height="5" rx="2.5" fill="var(--dr-action)" opacity=".7"/><rect x="74" y="116" width="28" height="5" rx="2.5" fill="var(--dr-illo-lav)"/></g>
+        <path class="twinkle" d="M252 34l4 9 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z" fill="var(--dr-illo-honey)"/>
+        <g class="sway"><path d="M30 204c0-30 6-50 2-70" stroke="var(--dr-yes)" stroke-width="3" fill="none"/><ellipse cx="22" cy="150" rx="12" ry="6" fill="var(--dr-yes-line)" transform="rotate(-30 22 150)"/><ellipse cx="42" cy="166" rx="12" ry="6" fill="var(--dr-yes-line)" transform="rotate(30 42 166)"/><ellipse cx="24" cy="180" rx="11" ry="5" fill="var(--dr-yes)" opacity=".6" transform="rotate(-25 24 180)"/></g>
+        <rect x="18" y="190" width="26" height="16" rx="4" fill="var(--dr-action)"/>
+        <path d="M84 206l4-46h22l4 46z" fill="var(--dr-ink)"/><rect x="82" y="138" width="34" height="34" rx="12" fill="var(--dr-illo-honey)"/><path d="M114 148l22-22" stroke="var(--dr-skin-2)" stroke-width="7" stroke-linecap="round"/><circle cx="99" cy="124" r="12" fill="var(--dr-skin-2)"/><path d="M86 122c0-12 10-17 18-14 7 2 10 8 9 14-4-6-12-6-18-5-4 1-7 3-9 5z" fill="#3A2A22"/><path d="M87 120c-4 8-3 18 1 24" stroke="#3A2A22" stroke-width="6" stroke-linecap="round" fill="none"/>
+        <path d="M196 206l3-40h22l3 40z" fill="var(--dr-action-hover)"/><rect x="192" y="146" width="36" height="32" rx="12" fill="var(--dr-action-soft)" stroke="var(--dr-illo-lav)"/><circle cx="210" cy="132" r="12" fill="var(--dr-skin-1)"/><path d="M198 128c2-9 12-13 20-8 3 2 4 5 4 8-6-3-15-3-24 0z" fill="var(--dr-ink)"/><rect x="178" y="168" width="40" height="24" rx="4" fill="var(--dr-ink)"/><rect x="182" y="172" width="32" height="16" rx="2" fill="var(--dr-action)" opacity=".8"/>
+      </svg>
+</div>
+</div></div>
+</section>
+
+<section class="lib-sec" id="filtry"><h2>Filtry i wyszukiwarka</h2>
+<p>Segment: jedna opcja naraz (<code>aria-pressed</code>). Wyszukiwarka z <code>aria-label</code>; placeholder mówi, po czym szukamy.</p>
+<div class="ex" data-title="Pasek filtrów"><div class="ex-stage">
+<div class="dr-filters" style="margin:0">
+  <div class="dr-seg" role="group" aria-label="Filtr rekomendacji">
+    <button type="button" aria-pressed="true">Wszyscy</button><button type="button" aria-pressed="false">Po rozmowie</button><button type="button" aria-pressed="false">Zaprosić</button>
+  </div>
+  <input class="dr-search" type="search" placeholder="Szukaj osoby lub umiejętności" aria-label="Szukaj kandydatów">
+</div>
+</div></div>
+</section>
+
+<section class="lib-sec" id="tabela"><h2>Tabela kandydatów</h2>
+<p>Maks. 5 kolumn, <code>scope="col"</code>, tekst się zawija, poniżej 760 px wiersze stają się kartami (dlatego każde <code>td</code> ma <code>data-label</code>). Zmień szerokość okna, żeby zobaczyć.</p>
+<div class="ex" data-title="Dwa wiersze" data-note="komórka osoby: imię / specjalizacja / data"><div class="ex-stage">
+<div class="dr-table-wrap">
+  <table class="dr-table">
+    <thead><tr><th scope="col" style="width:25%">Kandydat</th><th scope="col" style="width:18%">Rekomendacja i dostępność</th><th scope="col">Co zrobił sam (z rozmowy)</th><th scope="col" class="r" style="width:11%">Match Score</th><th scope="col" style="width:14%"><span class="sr">Akcja</span></th></tr></thead>
+    <tbody>
+      <tr>
+        <td data-label="Kandydat"><a class="name" href="#">Kuba W.</a><span class="meta dr-spec"><b>Specjalizacja:</b> <button type="button" class="dr-spec-btn">Indeksowanie i ewaluacja</button><template><span class="dr-label">Specjalizacja</span><strong class="dr-spec-name">Indeksowanie i ewaluacja</strong><p class="dr-spec-desc">Buduje sposób, w jaki dokumenty trafiają do wyszukiwarki, i testy trafności odpowiedzi.</p><span class="dr-label">Skąd to wiemy</span><p class="dr-spec-src">Potwierdzone w rozmowie z praktykiem</p></template></span><span class="meta-2">Aplikacja 6 cze</span></td>
+        <td data-label="Rekomendacja praktyka"><span class="dr-verdict yes">Zaprosić</span><span class="dr-wait">Zainteresowany rozmową<br>Karta od 2 dni</span></td>
+        <td data-label="Co zrobił sam"><div class="dr-peek"><span class="dr-peek-text">Pipeline indeksowania i testy ewaluacji; API robiła inna osoba</span><button type="button" class="dr-peek-btn">Pokaż więcej</button><template><span class="dr-label">Zrobił sam i potwierdził</span><ul class="dr-list yes"><li>Pipeline indeksowania</li><li>Testy ewaluacji</li></ul><span class="dr-label">Robiła inna osoba</span><ul class="dr-list"><li>API wyszukiwarki</li></ul></template></div></td>
+        <td data-label="Match Score" class="r"><span class="dr-score"><b>82</b><small>/100</small></span></td>
+        <td data-label="" class="r"><a class="dr-btn dr-btn-ghost dr-btn-sm" href="#" aria-label="Zobacz kartę: Kuba W.">Zobacz kartę</a></td>
+      </tr>
+      <tr>
+        <td data-label="Kandydat"><span class="name">Aleksandra Wiśniewska-Nowakowska</span><span class="meta dr-spec"><b>Specjalizacja:</b> <button type="button" class="dr-spec-btn">LLM w dokumentach prawnych</button><template><span class="dr-label">Specjalizacja</span><strong class="dr-spec-name">LLM w dokumentach prawnych</strong><p class="dr-spec-desc">Modele językowe w pracy na umowach i pismach.</p><span class="dr-label">Skąd to wiemy</span><p class="dr-spec-src">Z aplikacji, niepotwierdzone rozmową</p></template></span><span class="meta-2">Aplikacja 9 cze</span></td>
+        <td data-label="Rekomendacja praktyka"><span class="dr-verdict none">Brak rozmowy</span><span class="dr-wait late">Czeka 9 dni na odpowiedź</span></td>
+        <td data-label="Co zrobił sam" class="dr-note">Brak rozmowy z praktykiem</td>
+        <td data-label="Match Score" class="r"><span class="dr-score"><b>75</b><small>/100</small></span></td>
+        <td data-label="" class="r"><a class="dr-btn dr-btn-ghost dr-btn-sm" href="#">Zamów rozmowę</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div></div>
+<div class="rules"><div class="y"><b>Tak</b>Długie nazwisko zawija się do nowej linii.</div><div class="n"><b>Nie</b>Poziomy suwak, wielokropek, szósta kolumna.</div></div>
+</section>
+
+<section class="lib-sec" id="podglad"><h2>Podgląd szczegółów</h2>
+<p>Najedź, ustaw fokus albo kliknij „Pokaż więcej” lub nazwę specjalizacji w tabeli wyżej. Treść dymka trzymaj w <code>&lt;template&gt;</code> obok przycisku; <code>doroboty.js</code> robi resztę (Esc zamyka, klik przypina na dotyku). W dymku nie ma przycisków.</p>
+</section>
+
+<section class="lib-sec" id="match"><h2>Match Score i legenda</h2>
+<p>Szary, bez kolorów skali; słabszy wizualnie niż rekomendacja.</p>
+<div class="ex" data-title="Na karcie kandydata"><div class="ex-stage">
+<div class="dr-card" style="max-width:360px">
+  <span class="dr-label">Match Score</span>
+  <div class="dr-bigscore">82<small>/100</small></div>
+  <div class="dr-bar" aria-hidden="true"><i style="width:82%"></i></div>
+  <p class="dr-note" style="margin:0">Zgodność tekstów z ogłoszeniem. Samodzielny zakres pracy pokazuje rekomendacja praktyka.</p>
+</div>
+</div></div>
+<div class="ex" data-title="Legenda pod tabelą"><div class="ex-stage">
+<aside class="dr-legend" aria-labelledby="lg1" style="margin:0">
+  <h3 id="lg1" class="dr-legend-title">Jak czytać Match Score i rekomendację</h3>
+  <div class="dr-legend-grid">
+    <div><span class="dr-label">Co mierzy Match Score</span><p>Zgodność tekstów kandydata z ogłoszeniem w czterech obszarach.</p></div>
+    <div><span class="dr-label">Do czego go używać</span><p>Do wstępnego przeglądu aplikacji.</p></div>
+    <div><span class="dr-label">Gdy wyniki są podobne</span><p>Różnicę pokazuje rekomendacja praktyka.</p></div>
+  </div>
+  <p class="dr-legend-foot"><b>Rekomendacja praktyka</b> pochodzi z 20-minutowej rozmowy. Decyzja o zaproszeniu należy do Twojej firmy.</p>
+</aside>
+</div></div>
+</section>
+
+<section class="lib-sec" id="karta"><h2>Karta, pole faktu, listy</h2>
+<p>Karta = jedna sekcja. Pole faktu = etykieta + wartość wewnątrz karty. Kropki list: zielona „potwierdził”, szara „inna osoba”, miodowa „nie wiemy”.</p>
+<div class="ex" data-title="Siatka faktów (dr-split + dr-card-tight)"><div class="ex-stage">
+<div class="dr-split">
+  <div class="dr-card dr-card-tight"><span class="dr-label">Zrobił sam i potwierdził w rozmowie</span><ul class="dr-list yes"><li>Pipeline indeksowania</li><li>Testy ewaluacji</li></ul></div>
+  <div class="dr-card dr-card-tight"><span class="dr-label">Robiła inna osoba</span><ul class="dr-list"><li>API wyszukiwarki</li></ul></div>
+  <div class="dr-card dr-card-tight"><span class="dr-label">Czego nie wiemy</span><ul class="dr-list ask"><li>Utrzymanie w produkcji</li></ul></div>
+  <div class="dr-card dr-card-tight"><span class="dr-label">O co dopytać na rozmowie</span><ol class="dr-q"><li>Jak ustaliłby, jakie pytania zadają użytkownicy?</li><li>Co zrobiłby, gdy jakość spadnie?</li></ol></div>
+</div>
+</div></div>
+<div class="ex" data-title="Klucz–wartość i pole faktu"><div class="ex-stage">
+<div class="dr-split">
+  <div class="dr-card"><span class="dr-label">Dostępność</span><div class="dr-kv"><div><span>Zainteresowanie rozmową</span>Tak, potwierdził 7 cze</div><div><span>Odpowiedz do</span><b class="num">10 cze</b> (3 dni od karty)</div></div></div>
+  <div><div class="dr-fact"><span class="dr-label">Otrzymujesz</span>Karty z rekomendacją: Zaprosić, Dopytać lub Nie zapraszać</div></div>
+</div>
+</div></div>
+</section>
+
+<section class="lib-sec" id="porownanie"><h2>Porównanie i materiały</h2>
+<div class="ex" data-title="Aplikacja a rozmowa"><div class="ex-stage">
+<div class="dr-card">
+  <h2 class="dr-h2">Aplikacja a rozmowa</h2>
+  <div class="dr-compare">
+    <div class="dr-fact"><span class="dr-label">Zakres opisany w aplikacji</span>Indeksowanie i testy ewaluacji</div>
+    <div class="dr-fact"><span class="dr-label">Zakres potwierdzony w rozmowie</span>Indeksowanie i ewaluacja</div>
+  </div>
+  <span class="dr-match">Zgodny: opis w aplikacji nie zawyża zakresu</span>
+</div>
+</div></div>
+<div class="ex" data-title="Materiały kandydata"><div class="ex-stage">
+<div class="dr-card">
+  <h2 class="dr-h2">Materiały kandydata</h2>
+  <div class="dr-mat"><div><b>Repozytorium komponentu i opis testów</b><div class="pair"><div class="dr-fact"><span class="dr-label">Co pokazuje</span>Strukturę komponentu</div><div class="dr-fact"><span class="dr-label">Czego nie dowodzi</span>Utrzymania w produkcji</div></div></div></div>
+</div>
+</div></div>
+</section>
+
+<section class="lib-sec" id="zakup"><h2>Zakup</h2>
+<p>Plany jako radio w <code>role="radiogroup"</code>; zaznaczony ma klasę <code>is-selected</code>. Dodatek: przełącznik z <code>role="switch"</code>. Podsumowanie z <code>aria-live="polite"</code>.</p>
+<div class="ex" data-title="Plany"><div class="ex-stage">
+<div class="dr-plans" role="radiogroup" aria-label="Rodzaj ogłoszenia">
+  <label class="dr-plan is-selected">
+    <div class="dr-row dr-row-between"><b style="font-size:var(--dr-t-name)">Ogłoszenie 30 dni</b><input type="radio" name="plan-ex" checked></div>
+    <div class="price num">1 620 zł <small>netto</small></div>
+    <ul class="dr-check"><li>Publikacja na 30 dni</li><li>Match Score dla każdej aplikacji</li></ul>
+  </label>
+  <label class="dr-plan">
+    <div class="dr-row dr-row-between"><b style="font-size:var(--dr-t-name)">Pakiet 3 ogłoszeń</b><input type="radio" name="plan-ex"></div>
+    <div class="price num">3 630 zł <small>netto</small></div>
+    <ul class="dr-check"><li>3 publikacje do wykorzystania</li></ul>
+  </label>
+</div>
+</div></div>
+<div class="ex" data-title="Dodatek, cena, gwarancja, podsumowanie"><div class="ex-stage">
+<div class="dr-grid-2">
+  <div class="dr-stack">
+    <div class="dr-card"><div class="dr-addon">
+      <label class="dr-toggle"><input type="checkbox" role="switch" checked aria-label="Dodaj rozmowy z praktykiem AI"><span></span></label>
+      <div style="flex:1;min-width:0">
+        <div class="dr-row dr-row-between"><b style="font-size:var(--dr-t-name)">Rozmowy z praktykiem AI</b><span class="dr-chip dr-chip-info">Beta · cena testowa</span></div>
+        <div class="dr-row" style="margin-top:10px"><span class="num" style="font-size:22px;font-weight:500">450 zł</span><span class="dr-note">netto</span><span class="dr-was num">900 zł</span></div>
+      </div>
+    </div></div>
+    <div class="dr-guarantee"><span aria-hidden="true" style="font-weight:700">✓</span><div><b>Gwarancja zwrotu.</b> Jeśli żadna karta nie wskaże osoby wartej zaproszenia, zwracamy koszt dodatku.</div></div>
+  </div>
+  <aside class="dr-card" aria-label="Podsumowanie">
+    <h2 class="dr-h2">Podsumowanie</h2>
+    <div class="dr-sum" aria-live="polite">
+      <div class="ln"><span>Ogłoszenie 30 dni</span><span class="num">1 620 zł</span></div>
+      <div class="ln dr-note"><span>VAT 23%</span><span class="num">372,60 zł</span></div>
+      <div class="ln tot"><span>Razem brutto</span><span class="num">1 992,60 zł</span></div>
+    </div>
+    <button type="button" class="dr-btn dr-btn-primary dr-btn-lg" style="width:100%;margin-top:18px">Kup ogłoszenie</button>
+  </aside>
+</div>
+</div></div>
+</section>
+
+<section class="lib-sec" id="formularz"><h2>Pole formularza</h2>
+<p>Etykieta nad polem, podpowiedź pod spodem, błąd z „!” i <code>aria-invalid</code>. W JS: <code>DRForm.invalid(input, true)</code>.</p>
+<div class="ex" data-title="Domyślne i z błędem"><div class="ex-stage">
+<div class="dr-split">
+  <div class="dr-field">
+    <label for="f1">NIP firmy</label>
+    <input class="dr-input num" id="f1" inputmode="numeric" aria-describedby="f1-h">
+    <span class="hint" id="f1-h">10 cyfr, bez kresek.</span>
+  </div>
+  <div class="dr-field">
+    <label for="f2">NIP firmy</label>
+    <input class="dr-input num" id="f2" inputmode="numeric" value="525-12" aria-invalid="true" aria-describedby="f2-h f2-e">
+    <span class="hint" id="f2-h">10 cyfr, bez kresek.</span>
+    <span class="err" id="f2-e">Wpisz 10 cyfr NIP, bez kresek i spacji.</span>
+  </div>
+</div>
+</div></div>
+</section>
+
+<section class="lib-sec" id="stany"><h2>Stany</h2>
+<p>Każdy ekran z danymi ma cztery stany: pusty, ładowanie, błąd, sukces. Komunikat mówi, co się stało i co zrobić, bez przepraszania i kodów błędów.</p>
+<div class="ex" data-title="Komunikaty (dr-alert)"><div class="ex-stage">
+<div class="dr-stack">
+  <div class="dr-alert"><i aria-hidden="true">i</i><div class="body"><b>Karty pojawią się po trzeciej aplikacji</b>Praktyk zaczyna rozmowy, gdy ma z kogo wybierać.</div></div>
+  <div class="dr-alert success"><i aria-hidden="true">✓</i><div class="body"><b>Faktura wysłana</b>Przyszła na adres e-mail konta.</div></div>
+  <div class="dr-alert error" role="alert"><i aria-hidden="true">!</i><div class="body"><b>Nie udało się wczytać kandydatów</b>Sprawdź połączenie z internetem i spróbuj ponownie.</div><button type="button" class="dr-btn dr-btn-secondary dr-btn-sm">Spróbuj ponownie</button></div>
+</div>
+</div></div>
+<div class="ex" data-title="Pusty stan (dr-empty)"><div class="ex-stage">
+<div class="dr-empty">
+  <svg class="dr-illo dr-illo-empty" viewBox="0 0 260 150" role="img" aria-label="Ilustracja: rekruterka przypina ogłoszenie na tablicy, obok czekają puste miejsca na karty kandydatów">
+        <ellipse cx="130" cy="144" rx="118" ry="6" fill="var(--dr-illo-floor)"/>
+        <rect x="24" y="14" width="160" height="104" rx="12" fill="#fff" stroke="var(--dr-illo-lav)" stroke-width="2"/>
+        <rect x="38" y="28" width="62" height="76" rx="8" fill="var(--dr-action-soft)" stroke="var(--dr-illo-lav)"/>
+        <rect x="46" y="40" width="40" height="7" rx="3.5" fill="var(--dr-action)"/><rect x="46" y="54" width="44" height="5" rx="2.5" fill="var(--dr-illo-lav)"/><rect x="46" y="64" width="34" height="5" rx="2.5" fill="var(--dr-illo-lav)"/>
+        <circle cx="69" cy="28" r="5" fill="var(--dr-illo-honey)"/>
+        <rect x="110" y="28" width="62" height="34" rx="8" fill="none" stroke="var(--dr-illo-lav)" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <rect x="110" y="70" width="62" height="34" rx="8" fill="none" stroke="var(--dr-illo-lav)" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <g class="float"><path d="M196 40l40-14-12 38-9-14z" fill="var(--dr-action)"/><path d="M215 50l9 14-1-20z" fill="var(--dr-action-hover)"/></g>
+        <path d="M200 144l3-36h22l3 36z" fill="var(--dr-action-hover)"/>
+        <rect x="196" y="86" width="36" height="30" rx="12" fill="var(--dr-illo-lav)"/>
+        <path d="M200 96l-16-6" stroke="var(--dr-skin-3)" stroke-width="7" stroke-linecap="round"/>
+        <circle cx="214" cy="72" r="12" fill="var(--dr-skin-3)"/><path d="M202 69c2-9 12-13 20-8 3 2 4 5 4 8-6-3-15-3-24 0z" fill="var(--dr-ink)"/>
+        <path class="twinkle" d="M246 96l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--dr-illo-honey)"/>
+      </svg>
+  <h2>Czekamy na pierwsze aplikacje</h2>
+  <p>Ogłoszenie jest widoczne od dziś. Po trzeciej aplikacji praktyk AI porozmawia z najlepszymi kandydatami.</p>
+  <div class="dr-row"><a class="dr-btn dr-btn-secondary" href="#">Edytuj ogłoszenie</a></div>
+</div>
+</div></div>
+<div class="ex" data-title="Ładowanie (dr-skel)" data-note="szkielet ma kształt docelowej treści"><div class="ex-stage">
+<div class="dr-card" aria-busy="true" aria-label="Ładowanie">
+  <div class="dr-stack" style="gap:10px"><span class="dr-skel lg" style="width:40%"></span><span class="dr-skel" style="width:85%"></span><span class="dr-skel pill"></span></div>
+</div>
+</div></div>
+<div class="ex" data-title="Sukces (dr-empty z ilustracją potwierdzenia)"><div class="ex-stage">
+<div class="dr-empty">
+  <svg class="dr-illo dr-illo-empty" viewBox="0 0 260 150" role="img" aria-label="Ilustracja: rekruterka cieszy się z opublikowanego ogłoszenia z zielonym znacznikiem">
+          <ellipse cx="130" cy="144" rx="112" ry="6" fill="var(--dr-illo-floor)"/>
+          <rect x="62" y="18" width="104" height="120" rx="12" fill="#fff" stroke="var(--dr-illo-lav)" stroke-width="2"/>
+          <rect x="76" y="34" width="56" height="8" rx="4" fill="var(--dr-action)"/>
+          <rect x="76" y="52" width="76" height="6" rx="3" fill="var(--dr-action-soft)"/><rect x="76" y="64" width="64" height="6" rx="3" fill="var(--dr-action-soft)"/><rect x="76" y="76" width="70" height="6" rx="3" fill="var(--dr-action-soft)"/>
+          <rect x="76" y="96" width="44" height="14" rx="7" fill="var(--dr-yes-bg)"/><circle cx="84" cy="103" r="3" fill="var(--dr-yes)"/>
+          <g class="pop"><circle cx="160" cy="26" r="17" fill="var(--dr-yes)"/><path d="M152 26l5 5 11-11" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+          <path d="M190 144l3-36h22l3 36z" fill="var(--dr-ink)"/><rect x="186" y="84" width="36" height="32" rx="12" fill="var(--dr-illo-honey)"/>
+          <path d="M218 92l14-26" stroke="var(--dr-skin-2)" stroke-width="7" stroke-linecap="round"/><path d="M190 92l-12-18" stroke="var(--dr-skin-2)" stroke-width="7" stroke-linecap="round"/>
+          <circle cx="204" cy="70" r="12" fill="var(--dr-skin-2)"/><path d="M191 68c0-12 10-17 18-14 7 2 10 8 9 14-4-6-12-6-18-5-4 1-7 3-9 5z" fill="#3A2A22"/>
+          <path class="twinkle" d="M236 30l3 7 7 1-5 5 1 7-6-4-6 4 1-7-5-5 7-1z" fill="var(--dr-illo-honey)"/>
+          <g class="float"><circle cx="40" cy="44" r="5" fill="var(--dr-action)"/><rect x="28" y="70" width="10" height="10" rx="2" fill="var(--dr-illo-lav)" transform="rotate(20 33 75)"/></g>
+          <g class="float2"><circle cx="244" cy="96" r="4" fill="var(--dr-yes-line)"/><rect x="24" y="104" width="8" height="8" rx="2" fill="var(--dr-illo-honey)" transform="rotate(-15 28 108)"/></g>
+        </svg>
+  <h2>Ogłoszenie jest opublikowane</h2>
+  <p>Pierwsze karty kandydatów dostaniesz w ciągu 48 godzin od trzeciej aplikacji.</p>
+  <div class="dr-row"><a class="dr-btn dr-btn-primary" href="#">Przejdź do ogłoszenia</a></div>
+</div>
+</div></div>
+</section>
+
+<section class="lib-sec" id="ilustracje"><h2>Ilustracje</h2>
+<p>Własne SVG w kolorach tokenów, z <code>role="img"</code> i opisem. Tylko: wskazówka, rozmowa z praktykiem, oferta dodatku, puste stany, potwierdzenia. Animacje (klasy <code>float</code>, <code>float2</code>, <code>twinkle</code>, <code>pop</code>, <code>sway</code>) kończą się same.</p>
+<div class="ex" data-title="Rozmowa z praktykiem (dr-illo-talk)"><div class="ex-stage">
+<div class="dr-card" style="max-width:340px"><span class="dr-label">Rozmowa z praktykiem</span><svg class="dr-illo dr-illo-talk" viewBox="0 0 260 110" role="img" aria-label="Ilustracja: praktyczka DoRoboty rozmawia przez wideo z kandydatem">
+          <ellipse cx="130" cy="104" rx="118" ry="5" fill="var(--dr-illo-floor)"/>
+          <path d="M28 104l3-30h20l3 30z" fill="var(--dr-ink)"/><rect x="24" y="58" width="34" height="28" rx="11" fill="var(--dr-action)"/><circle cx="41" cy="45" r="11" fill="var(--dr-skin-1)"/><path d="M29 44c0-11 9-15 16-12 6 2 9 7 8 12-4-5-11-5-16-4-4 1-6 2-8 4z" fill="#7A4A2A"/><path d="M30 42c-3 7-2 15 1 20" stroke="#7A4A2A" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M30 44a11 11 0 0 1 22 0" stroke="var(--dr-ink)" stroke-width="2" fill="none"/><rect x="50" y="46" width="5" height="8" rx="2" fill="var(--dr-ink)"/>
+          <rect x="60" y="74" width="54" height="30" rx="4" fill="var(--dr-ink)"/><rect x="64" y="78" width="46" height="20" rx="2" fill="var(--dr-action-soft)"/><circle cx="87" cy="85" r="5" fill="var(--dr-skin-3)"/><rect x="80" y="91" width="14" height="6" rx="3" fill="var(--dr-illo-honey)"/>
+          <g class="float"><path d="M64 14h62a8 8 0 0 1 8 8v14a8 8 0 0 1-8 8H82l-10 8v-8h-8a8 8 0 0 1-8-8V22a8 8 0 0 1 8-8z" fill="#fff" stroke="var(--dr-illo-lav)" stroke-width="1.5"/><rect x="66" y="24" width="46" height="5" rx="2.5" fill="var(--dr-action)" opacity=".75"/><rect x="66" y="33" width="32" height="5" rx="2.5" fill="var(--dr-illo-lav)"/></g>
+          <g class="float2"><path d="M146 30h56a8 8 0 0 1 8 8v12a8 8 0 0 1-8 8h-8v8l-10-8h-38a8 8 0 0 1-8-8V38a8 8 0 0 1 8-8z" fill="var(--dr-action-soft)" stroke="var(--dr-illo-lav)" stroke-width="1.5"/><rect x="148" y="39" width="40" height="5" rx="2.5" fill="var(--dr-ink)" opacity=".55"/><rect x="148" y="48" width="26" height="5" rx="2.5" fill="var(--dr-illo-lav)"/></g>
+          <path d="M206 104l3-30h20l3 30z" fill="var(--dr-action-hover)"/><rect x="202" y="60" width="34" height="28" rx="11" fill="var(--dr-illo-honey)"/><circle cx="219" cy="47" r="11" fill="var(--dr-skin-3)"/><path d="M208 44c2-9 12-12 20-7 2 2 3 4 3 7-7-3-15-3-23 0z" fill="var(--dr-ink)"/>
+          <g class="pop"><circle cx="244" cy="22" r="11" fill="var(--dr-yes)"/><path d="M239 22l3.5 3.5 6.5-6.5" stroke="#fff" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></g>
+          <path class="twinkle" d="M138 8l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="var(--dr-illo-honey)"/>
+        </svg><div style="font-weight:600">Marta K., praktyczka AI</div><div class="dr-note">20 minut · rozmowa z człowiekiem</div></div>
+</div></div>
+</section>
+
+<section class="lib-sec" id="strona"><h2>Cała strona</h2>
+<p>Złożenie komponentów w ekran listy: <a href="przyklad-lista.html">przyklad-lista.html</a>. Pełny prototyp wszystkich ekranów: <code>02-ekrany/ekrany.html</code>.</p>
+</section>
+</main>
+</div>
+</div>
+<script src="doroboty.js"></script>
+<script>
+/* Pokazuje kod każdego przykładu (ten sam HTML, który jest wyrenderowany wyżej) */
+document.querySelectorAll('.ex').forEach(ex=>{
+  const st=ex.querySelector('.ex-stage');
+  const h=document.createElement('div');h.className='ex-h';h.innerHTML='<b></b><span></span>';
+  h.querySelector('b').textContent=ex.dataset.title||'';h.querySelector('span').textContent=ex.dataset.note||'';ex.prepend(h);
+  let html=st.dataset.src||st.innerHTML;
+  const lines=html.replace(/^\n+|\s+$/g,'').split('\n');const ind=Math.min(...lines.filter(l=>l.trim()).map(l=>l.match(/^ */)[0].length));
+  html=lines.map(l=>l.slice(ind)).join('\n');
+  const d=document.createElement('details');d.innerHTML='<summary>Kod HTML</summary><pre></pre>';d.querySelector('pre').textContent=html;ex.append(d);
+  if(st.hasAttribute('data-nolive')){st.innerHTML='<p class="dr-note" style="margin:0">Szkielet całej aplikacji: zobacz przykład strony na dole.</p>'}
+});
+</script>
+</body></html>

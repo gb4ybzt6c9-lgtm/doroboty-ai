@@ -11,6 +11,7 @@ export default tseslint.config(
       "test-results/**",
       "artifacts/**",
       "docs/design-system/agent-kit/**",
+      "docs/doroboty-ui-pakiet/**",
     ],
   },
   js.configs.recommended,
