@@ -20,8 +20,11 @@ Get a report showing nothing important blocks publishing the prototype, fix bloc
 - A thrown render error shows the error screen with working actions; reload restores the app.
 - `./scripts/verify` passes; FEATURES.md updated (PUB-10, SYS-09, SYS-10, SYS-12).
 
+## Version decision (2026-11-11)
+
+The quest does not name a version. The participant chose her own doroboty-ui design system, so `motyw-doroboty-ui` was merged into this branch and the audit was re-run on that version (19/20 preparation requirements). The Arena scenario (practitioner add-on → recommendations → card → note → stage after reload) passes on it, and 17 routes at 390 px show no horizontal scroll.
+
 ## Open (needs the participant)
 
-- Choose the version to publish (main / Poster People or `motyw-doroboty-ui` / coral) and the host.
 - Confirm the incident owner and contact.
 - After deployment: run the report again with the production URL (deployment stage).
