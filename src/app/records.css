@@ -2,7 +2,7 @@
 .record-sheet {
   min-width: 0;
   padding: 24px 28px;
-  border: 1px solid var(--gui-text);
+  border: 1px solid var(--host-contour, var(--gui-text));
   border-radius: 24px;
   background: white;
 }
@@ -135,7 +135,7 @@
   left: 0;
   width: 9px;
   height: 9px;
-  border: 1px solid var(--gui-text);
+  border: 1px solid var(--host-contour, var(--gui-text));
   border-radius: 50%;
   background: var(--gui-text);
   content: "";
@@ -333,7 +333,7 @@
   width: 100%;
   height: clamp(420px, 72vh, 800px);
   margin-top: 22px;
-  border: 1px solid var(--gui-edge);
+  border: 1px solid var(--host-contour, var(--gui-edge));
   border-radius: 10px;
   background: var(--gui-canvas);
 }
@@ -343,7 +343,7 @@
   display: grid;
   gap: 14px;
   padding: 24px;
-  border: 1px solid var(--gui-text);
+  border: 1px solid var(--host-contour, var(--gui-text));
   border-radius: 24px;
   background: #fff;
 }
@@ -375,7 +375,7 @@
   align-items: center;
   max-width: 100%;
   padding: 3px 12px;
-  border: 1px solid var(--gui-text);
+  border: 1px solid var(--host-contour, var(--gui-text));
   border-radius: 18px;
   background: #fff;
   font-size: 13px;
@@ -398,7 +398,7 @@
   justify-items: start;
   gap: 10px;
   padding: 18px;
-  border: 1px solid var(--gui-text);
+  border: 1px solid var(--host-contour, var(--gui-text));
   border-radius: 18px;
 }
 .record-reading .practitioner-recommendation p {
@@ -440,7 +440,7 @@
 }
 .practitioner-candidate-note {
   padding: 12px 16px;
-  border: 1px solid var(--gui-text);
+  border: 1px solid var(--host-contour, var(--gui-text));
   border-radius: 18px;
   background: #ffe0f7;
   font-size: 14px;
