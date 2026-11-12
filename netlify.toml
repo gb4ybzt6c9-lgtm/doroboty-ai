@@ -1,0 +1,8 @@
+# Netlify settings for the static prototype (see docs/release.md).
+# No environment variables or secrets are needed: everything in dist/ is public.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
