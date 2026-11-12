@@ -16,6 +16,7 @@ import { currentPerson, jobSchema } from "./model";
 import { usePrototype } from "./store";
 import { Field } from "./workspace";
 import { PRACTITIONER_ADDON } from "./practitioner";
+import { PractitionerAddonIllustration } from "./illustrations";
 import { Empty, NotFound, PageTitle } from "./shell";
 
 export function EmployerJobs() {
@@ -261,6 +262,7 @@ export function EmployerJobEditor() {
             <h2 id="practitioner-offer-title">{PRACTITIONER_ADDON.name}</h2>
             <span className="practitioner-pill">Beta</span>
           </div>
+          <PractitionerAddonIllustration />
           <p>
             Praktyk AI rozmawia {PRACTITIONER_ADDON.minutes} minut z{" "}
             {PRACTITIONER_ADDON.candidatesPerJob} najlepiej dopasowanymi kandydatami. W ciągu{" "}

@@ -1,6 +1,6 @@
 /* Extracted from the accepted prototype. See CHANGES.md and provenance.json. */
 .pp-intro-section {
-  border-bottom: 1px solid var(--pp-ink);
+  border-bottom: 1px solid var(--host-contour, var(--pp-ink));
 }
 .pp-intro-grid {
   display: grid;
@@ -78,7 +78,7 @@
   line-height: 1.2;
 }
 .pp-results-title > span {
-  border: 1px solid var(--pp-ink);
+  border: 1px solid var(--host-contour, var(--pp-ink));
   border-radius: var(--pp-radius-small);
   padding: 0 7px;
   min-height: 26px;
