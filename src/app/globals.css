@@ -8,6 +8,7 @@
 @import "./records.css";
 @import "./application.css";
 @import "./interactions.css";
+@import "./theme-doroboty-ui.css";
 
 @theme inline {
   --color-background: var(--background);

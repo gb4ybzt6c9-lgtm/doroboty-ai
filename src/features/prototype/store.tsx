@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { initialState, transition, type Action, type State } from "./model";
-import { parseState, readState, saveState, type StoragePort } from "./storage";
+import { STORAGE_KEY, parseState, readState, saveState, type StoragePort } from "./storage";
+const OTHER_TAB_ISSUE =
+  "Dane scenariusza zmieniono w innej karcie. Odśwież stronę, aby zobaczyć aktualny stan. Do tego czasu zmiany z tej karty nie są zapisywane, żeby nie nadpisać tamtych.";
 function browserStorage(): StoragePort | null {
   try {
     return window.localStorage;
@@ -53,6 +55,15 @@ function useStore() {
   }
   useEffect(() => {
     document.documentElement.classList.remove("dark");
+  }, []);
+  useEffect(() => {
+    function onOtherTab(event: StorageEvent) {
+      if (event.key !== STORAGE_KEY && event.key !== null) return;
+      setBlocked(true);
+      setIssue(OTHER_TAB_ISSUE);
+    }
+    window.addEventListener("storage", onOtherTab);
+    return () => window.removeEventListener("storage", onOtherTab);
   }, []);
   return {
     state,

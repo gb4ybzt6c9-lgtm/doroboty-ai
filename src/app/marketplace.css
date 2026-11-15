@@ -22,7 +22,7 @@
   left: auto;
 }
 .pp-search-submit {
-  border: 1px solid var(--pp-ink);
+  border: 1px solid var(--host-contour, var(--pp-ink));
   border-radius: 18px;
   background: var(--pp-action);
   font-size: 14px;
@@ -48,7 +48,7 @@
   color: white;
 }
 .pp-filter-button {
-  border: 1px solid var(--pp-ink);
+  border: 1px solid var(--host-contour, var(--pp-ink));
   border-radius: 18px;
   background: white;
 }
@@ -92,7 +92,7 @@
   margin: 25px 0 0 22px;
   width: 43px;
   height: 43px;
-  border: 1px solid var(--pp-ink);
+  border: 1px solid var(--host-contour, var(--pp-ink));
   border-radius: 18px;
   background: var(--pp-paper);
   font-size: 17px;
@@ -107,7 +107,7 @@
 .pp-offer-identity > [data-company-logo] {
   width: 60px;
   height: 60px;
-  border: 1px solid var(--pp-ink);
+  border: 1px solid var(--host-contour, var(--pp-ink));
   border-radius: 18px;
   background: var(--pp-fact);
 }
@@ -160,7 +160,7 @@
 .pp-offer-employer [data-company-logo] {
   width: 55px;
   height: 55px;
-  border: 1px solid var(--pp-ink);
+  border: 1px solid var(--host-contour, var(--pp-ink));
   border-radius: 16px;
 }
 .pp-employer-copy a {

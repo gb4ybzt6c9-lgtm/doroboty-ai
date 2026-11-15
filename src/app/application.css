@@ -50,7 +50,7 @@
 .application-company [data-company-logo] {
   width: 44px;
   height: 44px;
-  border: 1px solid var(--gui-edge);
+  border: 1px solid var(--host-contour, var(--gui-edge));
   border-radius: 10px;
 }
 .application-offer h2 {
