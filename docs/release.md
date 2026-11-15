@@ -4,7 +4,7 @@ How to publish this static prototype, check it and undo a bad release. The produ
 
 ## What is published
 
-- `npm run build` produces static files in `dist/`. There is no server, database, API key or environment variable.
+- `npm run build` produces static files in `dist/`. There is no server, database or secret. The only optional settings are the public PostHog variables below.
 - Hash routes (`/#/...`) work on any static host without rewrite rules. `vite.config.ts` uses `base: "./"`, so the site also works in a subfolder.
 - Visitor data stays in each visitor's own browser (localStorage). Publishing a new version never deletes it; the storage key is versioned (`doroboty.prototype.v1`) and incompatible saves are protected from overwriting.
 - `index.html` sets `robots: noindex, nofollow`; the footer says the offers and companies are examples.
@@ -18,7 +18,18 @@ How to publish this static prototype, check it and undo a bad release. The produ
 | Publish directory | `dist`                                                  |
 | Node.js           | 24 (from `.nvmrc`; set it if the host ignores `.nvmrc`) |
 
-No secrets or environment variables are needed. Do not add any to a frontend build: everything in `dist/` is public.
+No secrets are needed. Do not add any to a frontend build: everything in `dist/` is public.
+
+### Optional PostHog analytics
+
+Set these in the host's environment variables (Netlify: Project configuration → Environment variables) and redeploy. Without them the build sends nothing.
+
+| Variable            | Value                                                                  |
+| ------------------- | ---------------------------------------------------------------------- |
+| `VITE_POSTHOG_KEY`  | the PostHog **Project API key** (`phc_...`, public by design)          |
+| `VITE_POSTHOG_HOST` | `https://eu.i.posthog.com` (EU, default) or `https://us.i.posthog.com` |
+
+In PostHog project settings keep Autocapture on; turn on session replay ("Record user sessions") only if recordings are wanted. Never use a Personal API key (`phx_...`). Vite reads the variables at build time, so a change only takes effect after a new deploy. Check: PostHog → Activity → Live shows `$pageview` and `$autocapture` from the production address. What is skipped is described in FEATURES.md SYS-03.
 
 ## Before publishing
 
