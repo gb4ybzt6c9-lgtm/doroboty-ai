@@ -176,13 +176,13 @@ export function ProfilePage({ preview = false }: { preview?: boolean }) {
         {preview ? person.name : "Twój profil"}
       </PageTitle>
       {preview ? (
-        <div className="prototype-panel space-y-4">
+        <div className="prototype-panel ph-no-capture space-y-4">
           <h2>{person.headline}</h2>
           <p>{person.location}</p>
           <p>{person.bio}</p>
         </div>
       ) : (
-        <form onSubmit={save} className="prototype-panel prototype-form">
+        <form onSubmit={save} className="prototype-panel prototype-form ph-no-capture">
           <Field label="Imię i nazwisko">
             <Input name="name" required maxLength={200} defaultValue={person.name} />
           </Field>
@@ -305,7 +305,7 @@ export function ApplyPage() {
         <form
           noValidate
           onSubmit={submit}
-          className="record-sheet application-form"
+          className="record-sheet application-form ph-no-capture"
           aria-labelledby="application-form-title"
         >
           <header className="application-form-intro">
@@ -441,7 +441,7 @@ export function ApplicationsPage({ employer = false }: { employer?: boolean }) {
       <Field label={employer ? "Szukaj kandydata lub oferty" : "Szukaj oferty"}>
         <Input value={query} onChange={(e) => setQuery(e.target.value)} />
       </Field>
-      <div className="mt-6 space-y-4">
+      <div className="ph-no-capture mt-6 space-y-4">
         {applications.length ? (
           applications.map((a) => (
             <article className="prototype-panel" key={a.id}>
@@ -504,6 +504,13 @@ export function ApplicationDetail({ employer = false }: { employer?: boolean }) 
       x.id === id && (employer ? x.companyId === person.companyId : x.candidateId === person.id),
   );
   if (!application) return <NotFound />;
-  if (employer) return <RecruitingApplication key={application.id} application={application} />;
-  return <CandidateApplication key={application.id} application={application} />;
+  return (
+    <div className="ph-no-capture contents">
+      {employer ? (
+        <RecruitingApplication key={application.id} application={application} />
+      ) : (
+        <CandidateApplication key={application.id} application={application} />
+      )}
+    </div>
+  );
 }
