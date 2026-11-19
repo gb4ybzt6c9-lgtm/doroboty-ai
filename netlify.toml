@@ -1,8 +1,12 @@
 # Netlify settings for the static prototype (see docs/release.md).
-# No environment variables or secrets are needed: everything in dist/ is public.
+# No secrets are needed: everything in dist/ is public.
 [build]
   command = "npm run build"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "24"
+  # PostHog analytics (FEATURES.md SYS-03). The project key is public by design
+  # (it ships to every browser). Never put a Personal API key (phx_...) here.
+  VITE_POSTHOG_KEY = "phc_BZmfVD7X53f6KhqbKiMKuEGjwZiue89JC6CaZWN7qkS3"
+  VITE_POSTHOG_HOST = "https://eu.i.posthog.com"

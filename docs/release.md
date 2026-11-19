@@ -22,7 +22,7 @@ No secrets are needed. Do not add any to a frontend build: everything in `dist/`
 
 ### Optional PostHog analytics
 
-Set these in the host's environment variables (Netlify: Project configuration → Environment variables) and redeploy. Without them the build sends nothing.
+On Netlify both are set in `netlify.toml` (`[build.environment]`) for the participant's EU PostHog project. On another host, or to use a different PostHog project, set them in the host's environment variables and redeploy. Without them the build sends nothing.
 
 | Variable            | Value                                                                  |
 | ------------------- | ---------------------------------------------------------------------- |
